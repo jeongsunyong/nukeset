@@ -1,0 +1,210 @@
+#! /home/sunyong/Nuke11.3v1/libnuke-11.3.1.so -nx
+version 11.3 v1
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {1 vender t "print left top position"}
+ vender LunchTime
+ addUserKnob {1 shot t "print shot"}
+ shot FOO_0010
+ addUserKnob {1 user t "print user" -STARTLINE}
+ user "\[python os.getenv('USER')]"
+ addUserKnob {4 task -STARTLINE M {comp light rnd "" "" "" ""}}
+ addUserKnob {3 version t "print version" -STARTLINE}
+ version 1
+ addUserKnob {7 fontSize}
+ fontSize 1
+ addUserKnob {1 offset_h t "hight offset"}
+ offset_h height/100
+ addUserKnob {1 offset_w t "width offset" -STARTLINE}
+ offset_w width/100
+ addUserKnob {1 memo t "print memo"}
+ memo memo
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -31
+  ypos -143
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.vender]\n"
+  old_message {{76 117 110 99 104 84 105 109 101 10}
+    }
+  old_expression_markers {{0 8}
+    }
+  box {{"\[value parent.offset_w]"} {height-100*global_font_scale} {width} {"height-\[value parent.offset_h]"}}
+  transforms {{0 2}
+    }
+  cursor_position 21
+  font {{ Liberation Mono : Regular : liberation/LiberationMono-Regular.ttf : 0 }}
+  global_font_scale {{width/3000*fontSize}}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  name topLeft
+  xpos -31
+  ypos -103
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[date %y]\[date %m]\[date %d] \[date %T]"
+  old_message {{49 57 48 50 49 56 32 49 52 58 49 50 58 49 52}
+    }
+  old_expression_markers {{0 1 2 3 4 5 7 14}
+    }
+  box {0 {"height - (100*global_font_scale)"} {"width-\[value parent.offset_w]"} {"height-\[value parent.offset_h]"}}
+  xjustify right
+  transforms {{0 2}
+    }
+  cursor_position 37
+  font {{ Liberation Mono : Regular : liberation/LiberationMono-Regular.ttf : 0 }}
+  global_font_scale {{width/3000*fontSize}}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  name topRight
+  xpos -31
+  ypos -79
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.shot]"
+  old_message {{70 79 79 95 48 48 49 48}
+    }
+  old_expression_markers {{0 7}
+    }
+  box {0 {"height - (100*global_font_scale)"} {width} {"height-\[value parent.offset_h]"}}
+  xjustify center
+  transforms {{0 2}
+    }
+  cursor_position 19
+  font {{ Liberation Mono : Regular : liberation/LiberationMono-Regular.ttf : 0 }}
+  global_font_scale {{width/3000*fontSize}}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_opacity 0.5
+  background_border_x {{width}}
+  name topCenter
+  selected true
+  xpos -31
+  ypos -57
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.user] \[value parent.task] v\[format %03d \[value parent.version]]"
+  old_message {{115 117 110 121 111 110 103 32 99 111 109 112 32 118 48 48 49}
+    }
+  old_expression_markers {{0 6 8 11 14 16}
+    }
+  box {{"\[value parent.offset_w]"} {"\[value parent.offset_h]"} {width} {100*global_font_scale}}
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 49
+  font {{ Liberation Mono : Regular : liberation/LiberationMono-Regular.ttf : 0 }}
+  global_font_scale {{width/3000*fontSize}}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  name bottomLeft
+  xpos -31
+  ypos -31
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.memo]"
+  old_message {{109 101 109 111}
+    }
+  old_expression_markers {{0 3}
+    }
+  box {0 {"\[value parent.offset_h]"} {width} {100*global_font_scale}}
+  xjustify center
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 19
+  font {{ Liberation Mono : Regular : liberation/LiberationMono-Regular.ttf : 0 }}
+  global_font_scale {{width/3000*fontSize}}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_opacity 0.5
+  background_border_x {{width}}
+  name bottomCenter
+  xpos -31
+  ypos -7
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[metadata input/timecode] \[format %06d \[frame]]\n"
+  old_message {{49 51 58 52 57 58 48 53 58 49 57 32 48 48 48 48 52 52 10}
+    }
+  old_expression_markers {{0 10 12 17}
+    }
+  box {0 {"\[value parent.offset_h]"} {"width-\[value parent.offset_w]"} {100*global_font_scale}}
+  xjustify right
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 48
+  font {{ Liberation Mono : Regular : liberation/LiberationMono-Regular.ttf : 0 }}
+  global_font_scale {{width/3000*fontSize}}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  name bottomRight
+  xpos -31
+  ypos 17
+ }
+ Output {
+  name Output1
+  xpos -31
+  ypos 117
+ }
+end_group

@@ -1,7 +1,6 @@
-
-
+import nuke
 
 tb = nuke.toolbar("Nodes")
-m = tb.addMenu("Lazypic", icon="lazypic_logo.png")
+m = tb.addMenu("sunyong", icon="icon.png")
 m.addMenu("Draw")
-m.addCommand("Draw/Timecode_burnin", "nuke.createNode('timecode_burnin')")
+m.addCommand("Draw/slate", "nuke.createNode('slate')")
