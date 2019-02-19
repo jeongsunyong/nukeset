@@ -1,6 +1,7 @@
 import nuke
 import nukescripts
 import checkenv
+import openfile
 
 tb = nuke.toolbar("Nodes")
 m = tb.addMenu("sunyong", icon="icon.png")
@@ -13,3 +14,4 @@ mb.addCommand("-","","")
 mb.addCommand("StartPerformanceTimers", "nuke.startPerformanceTimers()")
 mb.addCommand("StopPerformanceTimers", "nuke.stopPerformanceTimers()")
 mb.addCommand("CheckEnv", "checkenv.main()")
+mb.addCommand("OpenFile", "openfile.main()")
