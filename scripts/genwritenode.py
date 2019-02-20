@@ -51,8 +51,8 @@ class MakeWrite(QWidget):
 		print self.ext.currentText()
 		print self.reformat.isChecked()
 		print self.slate.isChecked()
+		ext = self.ext.currentText()
 		self.close()
-
 
 def checkError():
 	nodes = nuke.selectedNodes()
@@ -62,8 +62,8 @@ def checkError():
 	else:
 		return 1;
 
-
 def genNodes():
+	nuke.message("%s" % (ext))
 	nodes = nuke.selectedNodes()
 	for e in nodes: 
 		tail = e
@@ -75,7 +75,7 @@ def genNodes():
 
 		w["file_type"].setValue("exr")
 		w["create_directories"].setValue(True)
-		w["file"].setValue("/test/test.####.exr")
+		w["file"].setValue("/test/test.####%s" % (ext))
 		r["type"].setValue("to box")
 		r["box_width"].setValue(2048)
 		r["box_height"].setValue(968)
@@ -91,18 +91,24 @@ def genNodes():
 
 
 def main():
+
 	result = checkError()
 	if result != 1:
 		return
 	global customApp
+
 	try:
 		customApp.close()
 	except:
 		pass
 	customApp = MakeWrite()
 	try:
-		genNodes()
 		customApp.show()
+		nuke.message("%s" % (ext))
+		genNodes()
 	except:
 		pass
 
+#r=nuke.nodes.Reformat() 값을 넣어서 하면 하나씩만됨
+#체크한거 값을 받아서 변수를 넣으려는데 전역변수로 해도 적용이 안되고 genNodes클래스만들어도안되서 생각해보기
+#그냥 값 대입하면 되긴 되는데 체크한걸 받아와서 다른 함수에서 그 값을 쓰는 방법 생각해보기
