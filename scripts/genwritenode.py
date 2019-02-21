@@ -5,30 +5,34 @@ from PySide2.QtWidgets import *
 class MakeWrite(QWidget):
 	formats = ["2048x1152","1920x1080","2048x872"]
 	exts = [".exr",".dpx",".tga",".mov"]
+	inputexts=""
+	inputwidth=0
+	inputhieght=0
 	
 	def __init__(self):
 		super(MakeWrite,self).__init__()
 		#option
-		self.ok = QPushButton("OK")
-		self.cancel = QPushButton("Cancel")
-		
-		self.ext = QComboBox()
-		self.ext.addItems(self.exts)
-
-		self.fm = QComboBox()
-		self.fm.addItems(self.formats)
-
-		self.reformat = QCheckBox("&reformat", self)
-		self.reformat.setChecked(True)
-
-		self.slate = QCheckBox("&slate", self)
-		self.slate.setChecked(True)
+			#OK/cancel button
+		self.ok = QPushButton("OK") #ok선언
+		self.cancel = QPushButton("Cancel") #cancel선언
+			#ext op
+		self.ext = QComboBox() #ext선언
+		self.ext.addItems(self.exts) # ext에 확장자명 옵션들 추가
+			#reformat size op
+		self.fm = QComboBox() #format선언(size)
+		self.fm.addItems(self.formats) # fm에 사이즈명 옵션들 추가
+			#reformat gen op
+		self.reformat = QCheckBox("&reformat", self) # reformat 체크박스
+		self.reformat.setChecked(True) #default checked
+			#slate gen op
+		self.slate = QCheckBox("&slate", self) #slate 체크박스
+		self.slate.setChecked(True) #default checked
 
 		
 		#event
-		self.ok.clicked.connect(self.bt_ok)
-		self.fm.currentIndexChanged.connect(self.indexChanged)
-		self.cancel.clicked.connect(self.close)
+		self.ok.clicked.connect(self.bt_ok) #ok를 클릭하면 bt_ok호출
+		self.fm.currentIndexChanged.connect(self.indexChanged) #현재 선택된 아이템 변경시 indexchanged호출
+		self.cancel.clicked.connect(self.close) #cancel을 클릭하면 close
 		
 
 		#set layout
@@ -44,51 +48,56 @@ class MakeWrite(QWidget):
 		self.setLayout(layout)
 
 	def indexChanged(self):
-		self.reformatSize = self.fm.currentText()
+		self.reformatSize = self.fm.currentText() #현재 선택된 문자열 저장
 
 	def bt_ok(self):
-		print self.fm.currentText()
-		print self.ext.currentText()
-		print self.reformat.isChecked()
-		print self.slate.isChecked()
-		ext = self.ext.currentText()
+		#print self.fm.currentText()
+		#print self.ext.currentText()
+		#print self.reformat.isChecked()
+		#print self.slate.isChecked()
+		inputext = self.ext.currentText().replace(".","")
+		inputwidth=(self.fm.currentText().split('x'))[0]
+		inputheight=(self.fm.currentText().split('x'))[1]
 		self.close()
 
-def checkError():
-	nodes = nuke.selectedNodes()
-	if len(nodes) == 0:
-		nuke.message("please select node.")
-		return 0;
-	else:
-		return 1;
-
-def genNodes():
-	nuke.message("%s" % (ext))
-	nodes = nuke.selectedNodes()
-	for e in nodes: 
-		tail = e
-
-		w = nuke.nodes.Write()
-		r = nuke.nodes.Reformat()
-		s = nuke.nodes.slate()
-		m = nuke.nodes.AddTimeCode()
-
-		w["file_type"].setValue("exr")
+	def checkError():
+		nodes = nuke.selectedNodes()
+		if len(nodes) == 0:
+			nuke.message("please select node.")
+			return 0;
+		else:
+			return 1;
+	def genWrite(node):
+		w = nuke.node.Write()
+		w["file_type"].setValue(inputext)
 		w["create_directories"].setValue(True)
-		w["file"].setValue("/test/test.####%s" % (ext))
-		r["type"].setValue("to box")
-		r["box_width"].setValue(2048)
-		r["box_height"].setValue(968)
-		r["box_fixed"].setValue(True)
+		w["file"].setValue("/test/test.####%s" % (inputext))
+		w.setInput(0,#다음순서)
+	def genSlate(node):
+		s = nuke.node.slate()
+		s.setInput(0,#다음순서)
+	def genTimecode(node):
+		m = nuke.node.AddTimeCode()
 		m["startcode"].setValue("01:00:00:00")
-		m["useFrame"].setValue(True)
-		m["frame"].setValue(1001)
+		m["usrFrame"].setValue(True)
+		m["frame"].setValue[1001]
+		m.setInput(0,#다음순서)
+	def genReformat():
+		r = nuke.node.Reformat()
+		r["box_width"].setValue(inputwidth)
+		r["box_height"].setValue(#inputheight)
+		r["box_fixed"].setValue(True)
+		r["type"].setValue("to box")	
+		r.setInput(0,#다음순서)
 
-		r.setInput(0,tail)
-		m.setInput(0,r)
-		s.setInput(0,m)
-		w.setInput(0,s)
+	def genNodes():
+		nodes = nuke.selectedNodes()
+		
+		for e in nodes: 
+			tail = e
 
+
+	
 
 def main():
 
@@ -104,8 +113,6 @@ def main():
 	customApp = MakeWrite()
 	try:
 		customApp.show()
-		nuke.message("%s" % (ext))
-		genNodes()
 	except:
 		pass
 
