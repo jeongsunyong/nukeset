@@ -2,6 +2,9 @@ import nuke
 import nukescripts
 import checkenv
 import openfile
+import genwritenode
+import helloworld
+import choicefile
 
 tb = nuke.toolbar("Nodes")
 m = tb.addMenu("sunyong", icon="icon.png")
@@ -15,3 +18,6 @@ mb.addCommand("StartPerformanceTimers", "nuke.startPerformanceTimers()")
 mb.addCommand("StopPerformanceTimers", "nuke.stopPerformanceTimers()")
 mb.addCommand("CheckEnv", "checkenv.main()")
 mb.addCommand("OpenFile", "openfile.main()")
+#mb.addCommand("GenWriteNode", "genwritenode.main()","F10",shortcutContext=2)
+mb.addCommand("HelloWorld", "helloworld.main()")
+mb.addCommand("test", "choicefile.main()")
