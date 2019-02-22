@@ -8,6 +8,7 @@ class MakeWrite(QWidget):
 	inputexts=""
 	inputwidth=0
 	inputhieght=0
+	order=[]
 	
 	def __init__(self):
 		super(MakeWrite,self).__init__()
@@ -58,7 +59,12 @@ class MakeWrite(QWidget):
 		inputext = self.ext.currentText().replace(".","")
 		inputwidth=(self.fm.currentText().split('x'))[0]
 		inputheight=(self.fm.currentText().split('x'))[1]
-		self.close()
+#		if self.reformat.isChecked()
+#			
+#		if self.slate.isChecked()
+#			
+#		genWrite()
+#		self.close()
 
 	def checkError():
 		nodes = nuke.selectedNodes()
@@ -67,28 +73,29 @@ class MakeWrite(QWidget):
 			return 0;
 		else:
 			return 1;
+
 	def genWrite(node):
 		w = nuke.node.Write()
 		w["file_type"].setValue(inputext)
 		w["create_directories"].setValue(True)
 		w["file"].setValue("/test/test.####%s" % (inputext))
-		w.setInput(0,#다음순서)
-	def genSlate(node):
+#		w.setInput(0,#다음순서)
+#	def genSlate(node):
 		s = nuke.node.slate()
-		s.setInput(0,#다음순서)
+#		s.setInput(0,#다음순서)
 	def genTimecode(node):
 		m = nuke.node.AddTimeCode()
 		m["startcode"].setValue("01:00:00:00")
 		m["usrFrame"].setValue(True)
 		m["frame"].setValue[1001]
-		m.setInput(0,#다음순서)
+#		m.setInput(0,#다음순서)
 	def genReformat():
 		r = nuke.node.Reformat()
 		r["box_width"].setValue(inputwidth)
-		r["box_height"].setValue(#inputheight)
+	#	r["box_height"].setValue(#inputheight)
 		r["box_fixed"].setValue(True)
 		r["type"].setValue("to box")	
-		r.setInput(0,#다음순서)
+#		r.setInput(0,#다음순서)
 
 	def genNodes():
 		nodes = nuke.selectedNodes()
